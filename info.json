@@ -1,0 +1,9 @@
+{
+  "name": "AmmoBox",
+  "version": "0.1.0",
+  "title": "AmmoBox",
+  "author": "Afforess",
+  "homepage": "http://afforess.com",
+  "description": "Making Gun Turrets Useful",
+  "dependencies": ["base >= 0.1.2"]
+}
