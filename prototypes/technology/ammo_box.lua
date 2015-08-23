@@ -26,7 +26,6 @@ data:extend(
             },
             time = 45
         },
-        upgrade = true,
         order = "e-l-a"
     }
 }
