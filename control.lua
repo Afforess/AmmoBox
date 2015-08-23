@@ -3,20 +3,6 @@ require "defines"
 local logger = require 'libs/logger'
 local l = logger.new_logger("main")
 
-game.on_event(defines.events.on_put_item, function(event)
-    for playerIndex,player in pairs(game.players) do
-        if (player ~= nil) and (player.selected ~= nil) then
-            if player.selected.name == "gun-turret-2" then
-                for _,turret_entry in ipairs(global.turrets) do
-                    if turret_entry ~= nil and turret_entry.turret == player.selected then
-                        player.guiOpened = turret_entry.turret_ui
-                    end
-                end
-            end
-        end
-    end
-end)
-
 game.on_event(defines.events.on_built_entity, function(event)
     local player = game.players[event.player_index]
     
@@ -52,25 +38,17 @@ game.on_event(defines.events.on_robot_pre_mined, function(event)
 end)
 
 game.on_event(defines.events.on_tick, function(event)
+    setupGlobal()
     for _,turret_entry in ipairs(global.turrets) do
         if turret_entry ~= nil then
-            if turret_entry.turret.get_inventory(1).is_empty() and not turret_entry.turret_ui.get_inventory(1).is_empty() then
-                item = turret_entry.turret_ui.get_inventory(1)[1]
-                --l:log("Turret UI has items: "..l:toString(items))
-                if turret_entry.turret.can_insert(item) and item.prototype.type == "ammo" and item.count > 0 then
-                    turret_entry.turret.insert({name = item.prototype.name, count = 1})
-                    item.count = item.count - 1
-                    --l:log("Inserted item "..l:toString(item).."into turret")
-                end
-            end
+            syncHealth(turret_entry)
+            updateInventory(turret_entry)
         end
     end
 end)
 
 game.on_load(function()
-    if global.turrets == nil then
-        global.turrets = {}
-    end
+    setupGlobal()
     -- Prune list of mk2 turrets for invalid entities
     local turrets = global.turrets
     global.turrets = {}
@@ -84,9 +62,7 @@ game.on_load(function()
 end)
 
 function addGunTurretMk2(turret_entity, turret_ui_entity)
-    if global.turrets == nil then
-        global.turrets = {}
-    end
+    setupGlobal()
     l:log("Adding gun turret mk2, global table: "..l:toString(global.turrets))
     global.turrets[#global.turrets + 1] = { turret = turret_entity, turret_ui = turret_ui_entity, loaded = false }
     l:log("Added gun turret mk2, global table: "..l:toString(global.turrets))
@@ -96,7 +72,7 @@ function removeGunTurretMk2(turret_entity)
     for i,turret_entry in ipairs(global.turrets) do
         if turret_entry ~= nil and (turret_entry.turret == turret_entity or turret_entry.turret_ui == turret_entity) then
             l:log("Found gun turret at pos "..i)
-            global.turrets[i] = nil
+            table.remove(global.turrets, i)
             return turret_entry
         end
     end
@@ -114,13 +90,61 @@ function onGunTurretMk2Destroyed(turret_entity)
             
             if turret_entity == turret_entry.turret then
                 l:log("Destroying Gun Turret mk2 at "..l:toString(turret_entry.turret_ui.position))
+                if not turret_entry.turret_ui.get_inventory(1).is_empty() then
+                    turret_entity.insert(turret_entry.turret_ui.get_inventory(1)[1])
+                end
                 turret_entry.turret_ui.destroy()
             else
                 l:log("Destroying Gun Turret mk2 at "..l:toString(turret_entry.turret.position))
+                if not turret_entry.turret.get_inventory(1).is_empty() then
+                    turret_entity.insert(turret_entry.turret.get_inventory(1)[1])
+                end
                 turret_entry.turret.destroy()
             end
         else
             l:log("No Turret Entry")
         end
+    end
+end
+
+function isBeingRepaired(turret_entry)
+    for playerIndex,player in pairs(game.players) do
+        if (player ~= nil) and (player.selected ~= nil) then
+            if player.selected == turret_entry.turret_ui then
+                if player.cursor_stack ~= nil and player.cursor_stack.valid_for_read and player.cursor_stack.type == "repair-tool" then
+                    return true
+                end
+            end
+        end
+    end
+    return false
+end
+
+function syncHealth(turret_entry)
+    if turret_entry.turret.health ~= turret_entry.turret_ui.health then
+        l:log("Turret health: "..turret_entry.turret.health.." turret UI health: "..turret_entry.turret_ui.health)
+        if isBeingRepaired(turret_entry) then
+            turret_entry.turret.health = turret_entry.turret_ui.health
+        else
+            turret_entry.turret_ui.health = turret_entry.turret.health
+        end
+    end
+end
+
+function updateInventory(turret_entry)
+    if turret_entry.turret.get_inventory(1).is_empty() and not turret_entry.turret_ui.get_inventory(1).is_empty() then
+        item = turret_entry.turret_ui.get_inventory(1)[1]
+        --l:log("Turret UI has items: "..l:toString(items))
+        if turret_entry.turret.can_insert(item) and item.prototype.type == "ammo" and item.count > 0 then
+            turret_entry.turret.insert({name = item.prototype.name, count = 1})
+            item.count = item.count - 1
+            --l:log("Inserted item "..l:toString(item).."into turret")
+        end
+    end
+end
+
+function setupGlobal()
+    if global.turrets == nil then
+        global.turrets = {}
     end
 end
