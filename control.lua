@@ -20,29 +20,21 @@ game.on_event(defines.events.on_robot_built_entity, function(event)
     if event.created_entity.name == "gun-turret-2" then
         l:log("Placing Gun Turret mk2 Entity")
         
-        local turret_ui = event.created_entity.surface.create_entity{name = "gun-turret-2-ui", position = event.created_entity.position, force = player.force}
+        local turret_ui = event.created_entity.surface.create_entity{name = "gun-turret-2-ui", position = event.created_entity.position, force = event.created_entity.force}
         addGunTurretMk2(event.created_entity, turret_ui)
     end
 end)
 
-game.on_event(defines.events.on_entity_died, function(event)
-    onGunTurretMk2Destroyed(event.entity)
-end)
-
-game.on_event(defines.events.on_preplayer_mined_item, function(event)
-    onGunTurretMk2Destroyed(event.entity)
-end)
-
-game.on_event(defines.events.on_robot_pre_mined, function(event)
+game.on_event({defines.events.on_entity_died,defines.events.on_preplayer_mined_item,defines.events.on_robot_pre_mined}, function(event)
     onGunTurretMk2Destroyed(event.entity)
 end)
 
 game.on_event(defines.events.on_tick, function(event)
-    setupGlobal()
-    for _,turret_entry in ipairs(global.turrets) do
-        if turret_entry ~= nil then
-            syncHealth(turret_entry)
-            updateInventory(turret_entry)
+    if game.tick % 20 == 0 and global.turrets ~= nil then
+        for _,turret_entry in ipairs(global.turrets) do
+            if turret_entry ~= nil then
+                updateInventory(turret_entry)
+            end
         end
     end
 end)
@@ -63,9 +55,9 @@ end)
 
 function addGunTurretMk2(turret_entity, turret_ui_entity)
     setupGlobal()
-    l:log("Adding gun turret mk2, global table: "..l:toString(global.turrets))
+    turret_ui_entity.destructible = false
+    turret_entity.operable = false
     global.turrets[#global.turrets + 1] = { turret = turret_entity, turret_ui = turret_ui_entity, loaded = false }
-    l:log("Added gun turret mk2, global table: "..l:toString(global.turrets))
 end
 
 function removeGunTurretMk2(turret_entity)
@@ -103,30 +95,6 @@ function onGunTurretMk2Destroyed(turret_entity)
             end
         else
             l:log("No Turret Entry")
-        end
-    end
-end
-
-function isBeingRepaired(turret_entry)
-    for playerIndex,player in pairs(game.players) do
-        if (player ~= nil) and (player.selected ~= nil) then
-            if player.selected == turret_entry.turret_ui then
-                if player.cursor_stack ~= nil and player.cursor_stack.valid_for_read and player.cursor_stack.type == "repair-tool" then
-                    return true
-                end
-            end
-        end
-    end
-    return false
-end
-
-function syncHealth(turret_entry)
-    if turret_entry.turret.health ~= turret_entry.turret_ui.health then
-        l:log("Turret health: "..turret_entry.turret.health.." turret UI health: "..turret_entry.turret_ui.health)
-        if isBeingRepaired(turret_entry) then
-            turret_entry.turret.health = turret_entry.turret_ui.health
-        else
-            turret_entry.turret_ui.health = turret_entry.turret.health
         end
     end
 end
