@@ -34,6 +34,8 @@ game.on_event(defines.events.on_tick, function(event)
         for _,turret_entry in ipairs(global.turrets) do
             if turret_entry ~= nil then
                 updateInventory(turret_entry)
+                -- Allow repairing damaged turrets
+                turret_entry.turret.operable = turret_entry.turret.health < 500
             end
         end
     end
