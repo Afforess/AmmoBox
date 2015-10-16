@@ -3,7 +3,7 @@ require "defines"
 local logger = require 'libs/logger'
 local l = logger.new_logger("main")
 
-game.on_event(defines.events.on_built_entity, function(event)
+script.on_event(defines.events.on_built_entity, function(event)
     local player = game.players[event.player_index]
     
     l:log("Created Entity: "..event.created_entity.type)
@@ -15,7 +15,7 @@ game.on_event(defines.events.on_built_entity, function(event)
     end
 end)
 
-game.on_event(defines.events.on_robot_built_entity, function(event)    
+script.on_event(defines.events.on_robot_built_entity, function(event)    
     l:log("Robot Created Entity: "..event.created_entity.type)
     if event.created_entity.name == "gun-turret-2" then
         l:log("Placing Gun Turret mk2 Entity")
@@ -25,11 +25,11 @@ game.on_event(defines.events.on_robot_built_entity, function(event)
     end
 end)
 
-game.on_event({defines.events.on_entity_died,defines.events.on_preplayer_mined_item,defines.events.on_robot_pre_mined}, function(event)
+script.on_event({defines.events.on_entity_died,defines.events.on_preplayer_mined_item,defines.events.on_robot_pre_mined}, function(event)
     onGunTurretMk2Destroyed(event.entity)
 end)
 
-game.on_event(defines.events.on_tick, function(event)
+script.on_event(defines.events.on_tick, function(event)
     if game.tick % 20 == 0 and global.turrets ~= nil then
         for _,turret_entry in ipairs(global.turrets) do
             if turret_entry ~= nil then
@@ -41,18 +41,16 @@ game.on_event(defines.events.on_tick, function(event)
     end
 end)
 
-game.on_load(function()
+script.on_load(function()
     setupGlobal()
     -- Prune list of mk2 turrets for invalid entities
     local turrets = global.turrets
     global.turrets = {}
-    l:log("Pruning turret list")
     for _,turret_entry in ipairs(turrets) do
         if turret_entry ~= nil and turret_entry.turret ~= nil and turret_entry.turret_ui ~= nil then
             addGunTurretMk2(turret_entry.turret, turret_entry.turret_ui)
         end
     end
-    l:log("Pruned "..(#turrets - #global.turrets).." dead mk2 gun turrets from global data")
 end)
 
 function addGunTurretMk2(turret_entity, turret_ui_entity)
