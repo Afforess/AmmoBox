@@ -1,10 +1,22 @@
-VERSION := 0.1.3
+VERSION := 0.1.4
+NAME := AmmoBox
 
-all:
-	rm -rf build/
+all: clean build install_mod
+
+build:
 	mkdir build/
-	mkdir build/AmmoBox_$(VERSION)
-	cp -R LICENSE README.md data.lua data-updates.lua info.json control.lua prototypes libs locale graphics migrations build/AmmoBox_$(VERSION)
-	cd build && zip -r AmmoBox_$(VERSION).zip AmmoBox_$(VERSION)
+	mkdir build/$(NAME)_$(VERSION)
+	cp info.json info.json.temp
+	sed -i -e 's/@VERSION@/$(VERSION)/' info.json
+	cp -R LICENSE README.md data.lua data-updates.lua info.json control.lua prototypes libs locale graphics migrations build/$(NAME)_$(VERSION)
+	cd build && zip -r $(NAME)_$(VERSION).zip $(NAME)_$(VERSION)
+	mv info.json.temp info.json
+
 clean:
 	rm -rf build/
+	
+install_mod:
+	if [ -L factorio_mods ] ; \
+	then \
+		cp -R build/$(NAME)_$(VERSION) factorio_mods ; \
+	fi;
