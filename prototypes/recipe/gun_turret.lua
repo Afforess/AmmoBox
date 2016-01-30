@@ -2,7 +2,7 @@ data:extend(
 {
     {
         type = "recipe",
-        name = "gun-turret-2",
+        name = "ammobox-gun-turret-2",
         enabled = false,
         energy_required = 20,
         ingredients =
@@ -12,7 +12,7 @@ data:extend(
             {"steel-plate", 10},
             {"gun-turret", 1}
         },
-        result = "gun-turret-2"
+        result = "ammobox-gun-turret-2"
     }
 }
 )

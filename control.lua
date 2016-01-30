@@ -1,24 +1,23 @@
 require "defines"
 require 'libs/utils'
 require 'libs/logger'
-local rescan = 0
 
 script.on_event(defines.events.on_built_entity, function(event)
     local player = game.players[event.player_index]
 
-    if event.created_entity.name == "gun-turret-2" then
+    if event.created_entity.name == "ammobox-gun-turret-2" then
         Logger.log("Placing Gun Turret mk2 Entity")
 
-        local turret_ui = player.surface.create_entity{name = "gun-turret-2-ui", position = event.created_entity.position, force = player.force}
+        local turret_ui = player.surface.create_entity{name = "ammobox-gun-turret-2-ui", position = event.created_entity.position, force = player.force}
         addGunTurretMk2(event.created_entity, turret_ui)
     end
 end)
 
 script.on_event(defines.events.on_robot_built_entity, function(event)
-    if event.created_entity.name == "gun-turret-2" then
+    if event.created_entity.name == "ammobox-gun-turret-2" then
         Logger.log("Placing Gun Turret mk2 Entity")
 
-        local turret_ui = event.created_entity.surface.create_entity{name = "gun-turret-2-ui", position = event.created_entity.position, force = event.created_entity.force}
+        local turret_ui = event.created_entity.surface.create_entity{name = "ammobox-gun-turret-2-ui", position = event.created_entity.position, force = event.created_entity.force}
         addGunTurretMk2(event.created_entity, turret_ui)
     end
 end)
@@ -70,7 +69,7 @@ end
 
 function onGunTurretMk2Destroyed(turret_entity)
     Logger.log("Gun Turret Destroyed, Entity name: " .. turret_entity.name)
-    if turret_entity.name == "gun-turret-2" or turret_entity.name == "gun-turret-2-ui" then
+    if turret_entity.name == "ammobox-gun-turret-2" or turret_entity.name == "ammobox-gun-turret-2-ui" then
         turret_entry = removeGunTurretMk2(turret_entity)
 
         if turret_entry ~= nil then

@@ -134,10 +134,10 @@ end
 data:extend({
     {
         type = "logistic-container",
-        name = "gun-turret-2-ui",
+        name = "ammobox-gun-turret-2-ui",
         icon = "__AmmoBox__/graphics/icons/gun-turret.png",
         flags = {"placeable-player", "player-creation"},
-        minable = {mining_time = 0.5, result = "gun-turret-2"},
+        minable = {mining_time = 0.5, result = "ammobox-gun-turret-2"},
         max_health = 0,
         corpse = "small-remnants",
         collision_box = {{-0.0, -0.0}, {0.0, 0.0}},
@@ -159,10 +159,10 @@ data:extend({
     },
     {
         type = "ammo-turret",
-        name = "gun-turret-2",
+        name = "ammobox-gun-turret-2",
         icon = "__AmmoBox__/graphics/icons/gun-turret.png",
         flags = {"placeable-player", "player-creation"},
-        minable = {mining_time = 0.5, result = "gun-turret-2"},
+        minable = {mining_time = 0.5, result = "ammobox-gun-turret-2"},
         max_health = 500,
         corpse = "medium-remnants",
         collision_box = {{-0.7, -0.7 }, {0.7, 0.7}},

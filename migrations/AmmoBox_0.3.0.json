@@ -1,0 +1,12 @@
+{
+  "entity":
+  [
+    ["gun-turret-2", "ammobox-gun-turret-2"],
+    ["gun-turret-2-ui", "ammobox-gun-turret-2-ui"]
+  ],
+  "item":
+  [
+    ["gun-turret-2", "ammobox-gun-turret-2"],
+    ["gun-turret-2-ui", "ammobox-gun-turret-2-ui"]
+  ]
+}

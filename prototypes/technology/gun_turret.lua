@@ -8,7 +8,7 @@ data:extend(
         {
             {
                 type = "unlock-recipe",
-                recipe = "gun-turret-2"
+                recipe = "ammobox-gun-turret-2"
             }
         },
         prerequisites = {"military-3", "turrets"},
