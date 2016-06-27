@@ -1,10 +1,11 @@
 {
   "name": "AmmoBox",
   "version": "@VERSION@",
+  "factorio_version": "0.13",
   "title": "AmmoBox",
   "author": "Afforess",
   "contributors": "Adil",
   "homepage": "http://afforess.com",
   "description": "Making Gun Turrets Useful",
-  "dependencies": ["base >= 0.12.11"]
+  "dependencies": []
 }

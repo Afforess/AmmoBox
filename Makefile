@@ -1,4 +1,4 @@
-VERSION := 0.3.0
+VERSION := 1.0.0
 NAME := AmmoBox
 
 all: clean build install_mod
@@ -14,7 +14,7 @@ build:
 
 clean:
 	rm -rf build/
-	
+
 install_mod:
 	if [ -L factorio_mods ] ; \
 	then \

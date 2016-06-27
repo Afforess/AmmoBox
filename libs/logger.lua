@@ -1,5 +1,3 @@
-require "defines"
-
 Logger = {prefix='ammo_box', name = 'main', log_buffer = {}, last_write_tick = 0, last_write_size = 0, ever_written = false, debug = false}
 
 function Logger.log(str)

@@ -1,5 +1,3 @@
-require "defines"
-require 'libs/utils'
 require 'libs/logger'
 
 script.on_event(defines.events.on_built_entity, function(event)
@@ -95,7 +93,7 @@ function updateInventory(turret_entry)
     if turret_inv.is_empty() then
         local turret_container_inv = turret_entry.turret_ui.get_inventory(1)
         if not turret_container_inv.is_empty() then
-            
+
             item = turret_container_inv[1]
             if item.prototype.type == "ammo" and item.count > 0 and turret_entry.turret.can_insert(item) then
                 turret_entry.turret.insert({name = item.prototype.name, count = 1})

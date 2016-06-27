@@ -5,9 +5,9 @@ data:extend(
         name = "basic-bullet-ammo-box",
         enabled = false,
         energy_required = 12,
-        ingredients = 
+        ingredients =
         {
-            {"basic-bullet-magazine", 100},
+            {"firearm-magazine", 100},
             {"steel-plate", 10}
         },
         result = "basic-bullet-ammo-box",
@@ -20,7 +20,7 @@ data:extend(
         energy_required = 24,
         ingredients =
         {
-            {"piercing-bullet-magazine", 100},
+            {"piercing-rounds-magazine", 100},
             {"steel-plate", 25}
         },
         result = "piercing-bullet-ammo-box",

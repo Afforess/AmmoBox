@@ -41,7 +41,7 @@ data:extend(
         },
         magazine_size = 1000,
         subgroup = "ammo",
-        order = "a[basic-clips]-b[basic-bullet-magazine]",
+        order = "a[basic-clips]-a[firearm-magazine]",
         stack_size = 100
     },
     {
@@ -79,7 +79,7 @@ data:extend(
         },
         magazine_size = 1000,
         subgroup = "ammo",
-        order = "a[basic-clips]-c[piercing-bullet-magazine]",
+        order = "a[basic-clips]-c[piercing-rounds-magazine]",
         stack_size = 100
     },
     {
@@ -89,24 +89,21 @@ data:extend(
         flags = {"goes-to-main-inventory"},
         ammo_type =
         {
-          category = "flame-thrower",
-          target_type = "direction",
-          action =
-          {
-            type = "direct",
-            action_delivery =
+            category = "flame-thrower",
+            target_type = "position",
+            clamp_position = true,
+
+            action =
             {
-              {
-                type = "flame-thrower",
-                explosion = "flame-thrower-explosion",
-                direction_deviation = 0.05,
-                speed_deviation = 0.22,
-                starting_frame_deviation = 0.10,
-                projectile_starting_speed = 0.60,
-                starting_distance = 0.7,
-              }
+                type = "direct",
+                action_delivery =
+                {
+                    type = "stream",
+                    stream = "handheld-flamethrower-fire-stream",
+                    max_length = 25,
+                    duration = 240,
+                }
             }
-          }
         },
         magazine_size = 10000,
         subgroup = "ammo",
