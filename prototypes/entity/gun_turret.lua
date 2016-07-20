@@ -142,20 +142,21 @@ data:extend({
         corpse = "small-remnants",
         collision_box = {{-0.0, -0.0}, {0.0, 0.0}},
         selection_box = {{-1, -1 }, {0, 1}},
-        fast_replaceable_group = "container",
         inventory_size = 1,
         logistic_mode = "requester",
+        open_sound = { filename = "__base__/sound/metallic-chest-open.ogg", volume=0.65 },
+        close_sound = { filename = "__base__/sound/metallic-chest-close.ogg", volume = 0.7 },
+        vehicle_impact_sound =  { filename = "__base__/sound/car-metal-impact.ogg", volume = 0.65 },
         picture =
         {
-            filename = "__AmmoBox__/graphics/entity/gun-turret/gun-turret-base.png",
-            priority = "low",
-            width = 0,
-            height = 0,
-            axially_symmetrical = false,
-            direction_count = 1,
-            shift = {0.0625, -0.046875},
+          filename = "__base__/graphics/entity/logistic-chest/logistic-chest-storage.png",
+          priority = "extra-high",
+          width = 38,
+          height = 32,
+          scale = 0.50,
+          shift = {-0.65, 0.47}
         },
-        circuit_wire_max_distance = 7.5
+        order = "b[turret]-b[ammobox-gun-turret-2]",
     },
     {
         type = "ammo-turret",
@@ -163,6 +164,8 @@ data:extend({
         icon = "__AmmoBox__/graphics/icons/gun-turret.png",
         flags = {"placeable-player", "player-creation"},
         minable = {mining_time = 0.5, result = "ammobox-gun-turret-2"},
+        collision_box = {{-0.7, -0.7 }, {0.7, 0.7}},
+        selection_box = {{-1, -1 }, {1, 1}},
         max_health = 500,
         corpse = "medium-remnants",
         rotation_speed = 0.015,
@@ -252,6 +255,7 @@ data:extend({
             range = 25,
             sound = make_heavy_gunshot_sounds(),
         },
-        call_for_help_radius = 45
+        call_for_help_radius = 45,
+        fast_replaceable_group = "ammo-turret"
     }
 })

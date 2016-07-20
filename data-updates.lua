@@ -1,5 +1,7 @@
 require 'util'
 
+data.raw['ammo-turret']['gun-turret'].fast_replaceable_group = "ammo-turret"
+
 -- verify gun_turret 2 tech has not been overriden by another mod
 -- and if it is overriden, re-add the recipe to the list of effects
 local found_recipe = false
