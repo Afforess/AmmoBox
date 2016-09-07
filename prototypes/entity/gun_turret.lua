@@ -20,13 +20,14 @@ function make_heavy_gunshot_sounds(volume)
     }
 end
 
-function gun_turret_extension(inputs)
+function ammobox_gun_turret_extension(inputs)
     return
     {
-        filename = "__base__/graphics/entity/gun-turret/gun-turret-gun-extension.png",
+        filename = "__AmmoBox__/graphics/entity/gun-turret/gun-turret-gun-extension.png",
         priority = "medium",
-        width = 65,
-        height = 63,
+        width = 130,
+        height = 126,
+        scale = 0.5,
         direction_count = 4,
         frame_count = inputs.frame_count and inputs.frame_count or 5,
         line_length = inputs.line_length and inputs.line_length or 0,
@@ -179,7 +180,7 @@ data:extend({
         {
             layers =
             {
-                gun_turret_extension{frame_count=1, line_length = 1},
+                ammobox_gun_turret_extension{frame_count=1, line_length = 1},
                 gun_turret_extension_mask{frame_count=1, line_length = 1},
                 gun_turret_extension_shadow{frame_count=1, line_length = 1}
             }
@@ -188,7 +189,7 @@ data:extend({
         {
             layers =
             {
-                gun_turret_extension{},
+                ammobox_gun_turret_extension{},
                 gun_turret_extension_mask{},
                 gun_turret_extension_shadow{}
             }
@@ -199,7 +200,7 @@ data:extend({
         {
             layers =
             {
-                gun_turret_extension{run_mode = "backward"},
+                ammobox_gun_turret_extension{run_mode = "backward"},
                 gun_turret_extension_mask{run_mode = "backward"},
                 gun_turret_extension_shadow{run_mode = "backward"}
             }
@@ -211,8 +212,9 @@ data:extend({
                 {
                     filename = "__AmmoBox__/graphics/entity/gun-turret/gun-turret-base.png",
                     priority = "high",
-                    width = 90,
-                    height = 75,
+                    width = 180,
+                    height = 150,
+                    scale = 0.5,
                     axially_symmetrical = false,
                     direction_count = 1,
                     frame_count = 1,
