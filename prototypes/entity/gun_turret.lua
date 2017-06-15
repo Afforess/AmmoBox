@@ -139,7 +139,7 @@ data:extend({
         icon = "__AmmoBox__/graphics/icons/gun-turret.png",
         flags = {"placeable-player", "player-creation"},
         minable = {mining_time = 0.5, result = "ammobox-gun-turret-2"},
-        max_health = 0,
+        max_health = 1,
         corpse = "small-remnants",
         collision_box = {{-0.0, -0.0}, {0.0, 0.0}},
         selection_box = {{-1, -1 }, {0, 1}},
