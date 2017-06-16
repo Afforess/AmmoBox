@@ -1,6 +1,6 @@
 {
   "name": "AmmoBox",
-  "version": "1.0.2",
+  "version": "@VERSION@",
   "factorio_version": "0.15",
   "title": "AmmoBox",
   "author": "Afforess",
