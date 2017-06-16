@@ -30,3 +30,23 @@ for _, tech in pairs(data.raw.technology) do
         end
     end
 end
+
+table.insert(data.raw.technology['military-2'].effects, {
+  type = "unlock-recipe",
+  recipe = "basic-bullet-ammo-box"
+})
+
+table.insert(data.raw.technology['military-3'].effects, {
+  type = "unlock-recipe",
+  recipe = "piercing-bullet-ammo-box"
+})
+
+table.insert(data.raw.technology['uranium-ammo'].effects, {
+  type = "unlock-recipe",
+  recipe = "uranium-bullet-ammo-box"
+})
+
+table.insert(data.raw.technology['flamethrower'].effects, {
+  type = "unlock-recipe",
+  recipe = "flamethrower-ammo-compressed"
+})

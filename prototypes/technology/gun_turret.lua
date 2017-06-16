@@ -11,17 +11,17 @@ data:extend(
                 recipe = "ammobox-gun-turret-2"
             }
         },
-        prerequisites = {"military-3", "turrets"},
+        prerequisites = {"military-2", "turrets"},
         unit =
         {
             count = 50,
             ingredients =
             {
-                {"science-pack-1", 4},
-                {"science-pack-2", 2},
-                {"science-pack-3", 1}
+                {"science-pack-1", 1},
+                {"science-pack-2", 1},
+                {"military-science-pack", 1}
             },
-            time = 40
+            time = 30
         },
         upgrade = true,
         order = "e-l-a"
